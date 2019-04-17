@@ -1,19 +1,19 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: hello-springboot
+  name: hello-springboot-demo
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: hello-springboot
+      app: hello-springboot-demo
   template:
     metadata:
       labels:
-        app: hello-springboot
+        app: hello-springboot-demo
     spec:
       containers:
-      - name: hello-springboot
+      - name: hello-springboot-demo
         image: ${ORIGIN_REPO}/${REPO}:${IMAGE_TAG}
         imagePullPolicy: Always
         ports:
@@ -23,12 +23,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: hello-springboot
+  name: hello-springboot-demo
 spec:
   ports:
   - port: 80
     targetPort: 8080
-    name: hello-springboot
+    name: hello-springboot-demo
   selector:
-    app: hello-springboot
+    app: hello-springboot-demo
   type: LoadBalancer
