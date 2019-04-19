@@ -6,6 +6,7 @@ pipeline{
         ORIGIN_REPO =  sh(returnStdout: true,script: 'echo $origin_repo').trim()
         REPO =  sh(returnStdout: true,script: 'echo $repo').trim()
         BRANCH =  sh(returnStdout: true,script: 'echo $branch').trim()
+        API_SERVER_URL = sh(returnStdout: true,script: 'echo $api_server_url').trim()
       }
 
       // 定义本次构建使用哪个标签的构建环境，本示例中为 “slave-pipeline”
@@ -49,7 +50,7 @@ pipeline{
                     }
                     steps {
                         container('kubectl') {
-                            step([$class: 'KubernetesDeploy', authMethod: 'certs', apiServerUrl: 'https://c23a83efa4bea4f1591fabaa93645fe17.serverlessk8s-a.cn-shenzhen.aliyuncs.com:6443', credentialsId:'k8sCertAuth', config: 'deployment.yaml',variableState: 'ORIGIN_REPO,REPO,IMAGE_TAG'])
+                            step([$class: 'KubernetesDeploy', authMethod: 'certs', apiServerUrl: '$API_SERVER_URL', credentialsId:'k8sCertAuth', config: 'deployment.yaml',variableState: 'ORIGIN_REPO,REPO,IMAGE_TAG'])
                         }
                     }
                 }
@@ -61,7 +62,7 @@ pipeline{
                     }
                     steps {
                         container('kubectl') {
-                            step([$class: 'KubernetesDeploy', authMethod: 'certs', apiServerUrl: 'https://c23a83efa4bea4f1591fabaa93645fe17.serverlessk8s-a.cn-shenzhen.aliyuncs.com:6443', credentialsId:'k8sCertAuth', config: 'deployment.yaml',variableState: 'ORIGIN_REPO,REPO,IMAGE_TAG'])
+                            step([$class: 'KubernetesDeploy', authMethod: 'certs', apiServerUrl: '$API_SERVER_URL', credentialsId:'k8sCertAuth', config: 'deployment.yaml',variableState: 'ORIGIN_REPO,REPO,IMAGE_TAG'])
                         }
                     }
                 }
